@@ -29,6 +29,7 @@ export default {
             .then(response => {
                 // this gets the data, which is an array, and pass the data to Vue instance's posts property
                 this.posts = response.data
+                console.log(this.posts)
             })
             .catch(error => {
                 this.posts = [{ entry: 'There was an error: ' + error.message }]
@@ -36,10 +37,17 @@ export default {
     },
     methods: {
         editPost(id) {
-            
+            this.showEditPost = true;
+            // this.entry = this.posts.id.entry
+            for (post in this.posts){
+                if (post.id == id){
+                    this.entry = post.entry;
+                    this.mood = post.mood;
+                }
+            }
         },
         updatePost(event) {
-            
+            axios.post()
         }
     }
 }
@@ -61,7 +69,7 @@ export default {
                     <td>{{ post.id }}</td>
                     <td>{{ post.entry }}</td>
                     <td>{{ post.mood }}</td>
-                    <td><button>Edit</button></td>
+                    <td><button @click="editPost(post.id)">Edit</button></td>
                 </tr>
             </tbody>
 
